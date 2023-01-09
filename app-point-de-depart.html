@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>commits-example</title>
+		<style>
+			
+		</style>
+	</head>
+	<body>
+		<div id="demo">
+			<div v-for="evenement in evenements">{{evenement.fields.description}}<br></div>
+		</div>
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="https://unpkg.com/vue@3"></script>
+		<script>
+			const apiURL =
+				"https://data.nantesmetropole.fr/api/records/1.0/search/?dataset=244400404_agenda-evenements-nantes-nantes-metropole&facet=emetteur&facet=rubrique&facet=lieu&facet=ville&facet=lieu_quartier";
+			const config = {
+			};
+
+			Vue.createApp({
+				data() {
+					return {
+						evenements: []
+					};
+				},
+
+				created: function () {
+					this.fetchDataAsync();
+				},
+				methods: {
+					fetchDataAsync: async function () {
+						try {
+					  	const response = await axios.get(apiURL)
+						  this.evenements = response.data.records
+					  } catch(error) {
+					    console.log(error);
+					  }
+					},
+				},
+			}).mount("#demo");
+		</script>
+	</body>
+</html>
